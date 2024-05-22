@@ -5,7 +5,7 @@ from concurrent.futures import ThreadPoolExecutor
 import re
 from flask_cors import CORS
 import json
-
+import time
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 
@@ -44,7 +44,8 @@ def parse_darwin(url):
     data = []
 
     figures = soup.find_all('figure', class_='card card-product border-0')
-    for figure in figures:
+    for figure in figures[:5]:
+        time.sleep(1)
         # Extracting data from the <a> tag inside each <figure>
         link_element = figure.find('a', class_='ga-item')
         if not link_element:
@@ -187,7 +188,8 @@ def parse_enter(url):
     data = []
 
     figures = soup.find_all('div', class_='grid-item')
-    for figure in figures:
+    for figure in figures[:5]:
+        time.sleep(1)
         # Extracting data from the <a> tag inside each <figure>
         link_element = figure.find('a')
         if not link_element:
