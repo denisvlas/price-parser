@@ -5,7 +5,7 @@ from concurrent.futures import ThreadPoolExecutor
 import re
 from flask_cors import CORS
 import json
-import time
+
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 
@@ -37,6 +37,8 @@ def get_all_data():
 
 def parse_darwin(url):
     res = requests.get(url)
+    print(f"Request to {url} returned status code {res.status_code}")
+
     if res.status_code != 200:
         return []
 
@@ -45,7 +47,6 @@ def parse_darwin(url):
 
     figures = soup.find_all('figure', class_='card card-product border-0')
     for figure in figures[:5]:
-        time.sleep(1)
         # Extracting data from the <a> tag inside each <figure>
         link_element = figure.find('a', class_='ga-item')
         if not link_element:
@@ -181,6 +182,8 @@ def parse_other_store(url):
 
 def parse_enter(url):
     res = requests.get(url)
+    print(f"Request to {url} returned status code {res.status_code}")
+
     if res.status_code != 200:
         return []
 
@@ -189,7 +192,6 @@ def parse_enter(url):
 
     figures = soup.find_all('div', class_='grid-item')
     for figure in figures[:5]:
-        time.sleep(1)
         # Extracting data from the <a> tag inside each <figure>
         link_element = figure.find('a')
         if not link_element:
@@ -248,6 +250,7 @@ def parse_enter(url):
         data.append(product)
 
     return data
+
 @app.route('/filter', methods=['POST'])
 def get_filtered_projects(filter_value=None, data=None):
     # Extrage datele din corpul cererii JSON
@@ -267,13 +270,6 @@ def get_filtered_projects(filter_value=None, data=None):
     return jsonify(data)
 
 
-@app.route('/test_request', methods=['GET'])
-def test_request():
-    res = requests.get('https://darwin.md/search?search=iphone')
-    return res.text
-
-
-# Dicționar pentru a mapa numele magazinului la funcția de parsing corespunzătoare
 store_parsers = {
     'darwin': {
         'url': 'https://darwin.md/search?search=',
@@ -283,7 +279,6 @@ store_parsers = {
         'url': 'https://enter.online/search?query=',
         'parser': parse_enter
     }
-    # Adaugă aici alte magazine cu funcțiile lor de parsing
 }
 
 if __name__ == '__main__':
