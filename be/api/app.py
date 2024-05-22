@@ -5,6 +5,7 @@ from concurrent.futures import ThreadPoolExecutor
 import re
 from flask_cors import CORS
 import json
+import cloudscraper
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
@@ -38,8 +39,9 @@ def parse_darwin(url):
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
     }
- 
-    res = requests.get(url, headers=headers)
+    scraper=cloudscraper.create_scraper()
+    res=scraper.get(url)
+    # res = requests.get(url, headers=headers)
 
     print(f"Request to {url} returned status code {res.status_code}")
 
@@ -110,8 +112,9 @@ def parse_enter(url):
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
     }
-
-    res = requests.get(url, headers=headers)
+    scraper=cloudscraper.create_scraper()
+    res=scraper.get(url)
+    # res = requests.get(url, headers=headers)
     print(f"Request to {url} returned status code {res.status_code}")
 
     if res.status_code != 200:
