@@ -265,6 +265,12 @@ def get_filtered_projects(filter_value=None, data=None):
     return jsonify(data)
 
 
+@app.route('/test_request', methods=['GET'])
+def test_request():
+    res = requests.get('https://api.github.com')
+    return jsonify({"status_code": res.status_code, "response": res.json()})
+
+
 # Dicționar pentru a mapa numele magazinului la funcția de parsing corespunzătoare
 store_parsers = {
     'darwin': {
