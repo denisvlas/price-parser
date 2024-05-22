@@ -37,9 +37,10 @@ def get_all_data():
 def parse_darwin(url):
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
-        'Referer': 'https://darwin.md'
     }
+ 
     res = requests.get(url, headers=headers)
+
     print(f"Request to {url} returned status code {res.status_code}")
 
     if res.status_code != 200:
@@ -103,37 +104,13 @@ def parse_darwin(url):
 def extract_numbers(price_str):
     return int(''.join(re.findall(r'\d+', price_str)))
 
-def parse_other_store(url):
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
-        'Referer': 'https://enter.online'
-    }
-    res = requests.get(url, headers=headers)
-    if res.status_code != 200:
-        return []
 
-    soup = BeautifulSoup(res.text, 'html.parser')
-    data = []
-
-    titles = soup.find_all(class_="another-title-class")
-    prices = soup.find_all(class_="another-price-class")
-    images = soup.find_all(class_="another-image-class")
-
-    for title, price, image in zip(titles, prices, images):
-        product = {
-            "product": title.get_text().strip(),
-            "price": price.get_text().strip(),
-            "image": image.get('src', '')
-        }
-        data.append(product)
-
-    return data
 
 def parse_enter(url):
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
-        'Referer': 'https://enter.online'
     }
+
     res = requests.get(url, headers=headers)
     print(f"Request to {url} returned status code {res.status_code}")
 
