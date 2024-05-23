@@ -9,7 +9,6 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium import webdriver
 import re
 import json
-
 app = Flask(__name__)
 
 @app.route('/')
@@ -49,9 +48,8 @@ def parse_darwin(url):
     
     try:
         driver.get(url)
-        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, 'card-product')))
+        WebDriverWait(driver, 60).until(EC.presence_of_element_located((By.CLASS_NAME, 'card-product')))
         soup = BeautifulSoup(driver.page_source, 'html.parser')
-        
         data = []
         figures = soup.find_all('figure', class_='card card-product border-0')
         
@@ -119,7 +117,7 @@ def parse_enter(url):
     
     try:
         driver.get(url)
-        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, 'grid-item')))
+        WebDriverWait(driver, 60).until(EC.presence_of_element_located((By.CLASS_NAME, 'grid-item')))
         soup = BeautifulSoup(driver.page_source, 'html.parser')
         
         data = []
