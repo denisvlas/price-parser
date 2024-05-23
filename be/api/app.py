@@ -24,7 +24,7 @@ def get_all_data():
     print(search)
     search = search.replace(' ', '%20')
     print(store_parsers['darwin']['url'] + search)
-    print(store_parsers['enter']['url'] + search)
+    # print(store_parsers['enter']['url'] + search)
     with ThreadPoolExecutor() as executor:
         futures = [executor.submit(store_parsers[store]['parser'], store_parsers[store]['url'] + search) for store in store_parsers]
         results = [future.result() for future in futures]
@@ -39,9 +39,9 @@ def parse_darwin(url):
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
     }
-    scraper=cloudscraper.create_scraper()
-    res=scraper.get(url)
-    # res = requests.get(url, headers=headers)
+    # scraper=cloudscraper.create_scraper()
+    # res=scraper.get(url)
+    res = requests.get(url, headers=headers, verify=False)
 
     print(f"Request to {url} returned status code {res.status_code}")
 
@@ -193,13 +193,13 @@ def get_filtered_projects(filter_value=None, data=None):
 
 store_parsers = {
     'darwin': {
-        'url': 'https://darwin.md/search?search=',
+        'url': 'https://94.158.246.177/search?search=',
         'parser': parse_darwin
     },
-    'enter': {
-        'url': 'https://enter.online/search?query=',
-        'parser': parse_enter
-    }
+    # 'enter': {
+    #     'url': 'https://enter.online/search?query=',
+    #     'parser': parse_enter
+    # }
 }
 
 if __name__ == '__main__':
