@@ -270,6 +270,9 @@ def parse_enter(url):
 #     return data
 
 
+
+
+
 @app.route('/filter', methods=['POST'])
 def get_filtered_projects(filter_value=None, data=None):
     if data is None and filter_value is None:
