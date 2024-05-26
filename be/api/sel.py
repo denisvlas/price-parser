@@ -3,21 +3,31 @@ import requests
 from bs4 import BeautifulSoup
 from concurrent.futures import ThreadPoolExecutor
 from flask_cors import CORS
-from parse_darwin import parse_darwin
-from parse_smart_md import parse_smart_md
+from parsers.parse_darwin import parse_darwin
+from parsers.parse_smart_md import parse_smart_md
+from parsers.parse_istrore_md import parse_istore_md
+from parsers.parse_maximum_md import parse_maximum_md
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 
 store_parsers = {
-    # 'darwin': {
-    #     'url': 'https://94.158.246.177/search?search=',
-    #     'parser': parse_darwin
-    # },
+    'darwin': {
+        'url': 'https://94.158.246.177/search?search=',
+        'parser': parse_darwin
+    },
     'smart_md': {
         'url': 'https://www.smart.md/s?query=',
         'parser': parse_smart_md
+    },
+    'istore_md': {
+        'url': 'https://istore.md/cautare?keywords=',
+        'parser': parse_istore_md
+    },
+    'maximum_md': {
+        'url': 'https://maximum.md/ro/search?query=',
+        'parser': parse_maximum_md
     }
 }
 

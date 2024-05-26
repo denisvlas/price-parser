@@ -12,6 +12,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
 from utils import extract_numbers
 from utils import reformat_image
+from utils import data_numbers
 
 def parse_smart_md(url):
     options = Options()
@@ -41,9 +42,9 @@ def parse_smart_md(url):
         container = driver.find_elements(By.CLASS_NAME, 'search-results')
         soup = BeautifulSoup(driver.page_source, 'html.parser')
         items = soup.find_all('div', class_='search-item search-product custom_product_content')
-        for item in items:
+        for item in items[:data_numbers]:
             link = item.find('div', class_='custom_product_title').find('a')['href']   
-            img = reformat_image(item.find('div', class_='custom_product_container').find('div',class_='custom_product_image').find('a').find('img')['src'])
+            img = item.find('div', class_='custom_product_container').find('div',class_='custom_product_image').find('a').find('img')['src']
             title = item.find('div', class_='custom_product_title').find('a').text
             lastPrice = extract_numbers(item.find('div', class_='custom_product_prices').find('a').find('div', class_='custom_product_price').find('span',class_='special').text)
             price = extract_numbers(item.find('div', class_='custom_product_prices').find('a').find('div', class_='custom_product_price').find('span',class_='regular').text)

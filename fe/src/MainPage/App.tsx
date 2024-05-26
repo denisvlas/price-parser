@@ -22,7 +22,7 @@ function App() {
     setLoading(true);
 
     try {
-      const response = await axios.post("http://192.168.100.3:5000/parse_all", {
+      const response = await axios.post("http://103.241.66.38:5000/parse_all", {
         search,
       });
       setData(response.data);
@@ -56,7 +56,7 @@ function App() {
   async function filterProjects() {
     
     try {
-      const res = await axios.post("http://192.168.100.3:5000/filter", {
+      const res = await axios.post("http://103.241.66.38:5000/filter", {
         data: data,
         filter: filter,
       });
@@ -89,7 +89,6 @@ function App() {
     <div className={styles.container}>
       {data.length==0&&<h1 style={{ fontSize: 25,marginTop:50 }}>BESTPRICE.STORE</h1>}
       <div className={styles.nav}>
-       
       <section className={styles["filtru-section"]}>
           <select
             onChange={(e) => handleChangeFilter(e.target.value)}

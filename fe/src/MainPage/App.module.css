@@ -177,6 +177,14 @@ font-size: 150px;
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
 }
+.shop{
+/* width:120px; */
+height: 24px;
+width: 100%;
+
+margin: 10px;
+
+}
 
 @keyframes rotation {
   0% {
@@ -285,6 +293,13 @@ font-size: 150px;
     border-radius: 10px;
     object-fit: cover;
   }
+
+  .shop{
+    /* width:120px; */
+  width: auto;
+  height: 20px;    
+    
+    }
 }
 
 /*

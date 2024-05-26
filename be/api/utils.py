@@ -10,3 +10,5 @@ def reformat_image(image):
     image = image.replace('.jpeg', '.webp')
     
     return image
+
+data_numbers=5
