@@ -3,7 +3,6 @@ import requests
 from bs4 import BeautifulSoup
 from concurrent.futures import ThreadPoolExecutor
 from flask_cors import CORS
-from extract_numbers import extract_numbers
 from parse_darwin import parse_darwin
 from parse_smart_md import parse_smart_md
 

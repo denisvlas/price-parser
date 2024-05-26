@@ -10,6 +10,8 @@ from request_headers import headers
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
+from utils import extract_numbers
+from utils import reformat_image
 
 def parse_smart_md(url):
     options = Options()
@@ -41,11 +43,19 @@ def parse_smart_md(url):
         items = soup.find_all('div', class_='search-item search-product custom_product_content')
         for item in items:
             link = item.find('div', class_='custom_product_title').find('a')['href']   
+            img = reformat_image(item.find('div', class_='custom_product_container').find('div',class_='custom_product_image').find('a').find('img')['src'])
             title = item.find('div', class_='custom_product_title').find('a').text
-
-
+            lastPrice = extract_numbers(item.find('div', class_='custom_product_prices').find('a').find('div', class_='custom_product_price').find('span',class_='special').text)
+            price = extract_numbers(item.find('div', class_='custom_product_prices').find('a').find('div', class_='custom_product_price').find('span',class_='regular').text)
+            discount=lastPrice-price
+            
             product = {
                 "name": title,
+                "price":price ,
+                "image": img,
+                "discount": discount,
+                "stockOut": None,
+                "lastPrice": lastPrice,
                 "link": link,
                 "shop": "smart.md"
             }

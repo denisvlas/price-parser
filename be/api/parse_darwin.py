@@ -2,7 +2,6 @@
 import requests
 from bs4 import BeautifulSoup
 import json
-import extract_numbers
 
 def parse_darwin(url):
     headers = {
