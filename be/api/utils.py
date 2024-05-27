@@ -11,4 +11,4 @@ def reformat_image(image):
     
     return image
 
-data_numbers=5
+data_numbers=20

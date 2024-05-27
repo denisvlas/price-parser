@@ -1,11 +1,12 @@
+
 import { useEffect, useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import styles from "./App.module.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import axios from "axios";
 import { data } from "../utils/models";
 import ProductsSection from "./ProductsSection";
+import socketIOClient from "socket.io-client";
+import ProgressBar from "./ProgressBar";
 
 function App() {
   // i neet the input to send a request to the server
@@ -13,12 +14,23 @@ function App() {
   const [search, setSearch] = useState("");
   const [data, setData] = useState<data[]>([]);
   const [loading, setLoading] = useState(false);
+  const [progress, setProgress] = useState(0);
+  useEffect((): any => {
+    const socket = socketIOClient("http://103.241.66.38:5000");
+    socket.on("progress", (data) => {
+      setProgress(data.progress);
+      // Afișează progresul sau poți face orice alte actualizări în interfața utilizatorului
+    });
+
+    return () => socket.disconnect(); // Deconectează socketul când componenta se demontează sau se actualizează
+  }, []);
 
   const handleSearch = (e: any) => {
     setSearch(e.target.value);
   };
 
   const searchProducts = async () => {
+    setProgress(0);
     setLoading(true);
 
     try {
@@ -26,8 +38,12 @@ function App() {
         search,
       });
       setData(response.data);
+      console.log(response.data)
       if(response.data.length>0){
+        setTimeout(() => {
         setLoading(false);
+          
+        }, 1200);
       }
       setCurrentPage(1);
       setPages(response.data.length/8);
@@ -81,14 +97,16 @@ function App() {
 
   const [currentPage, setCurrentPage] = useState(1);
 
-  const handlePageChange = (e: any) => {
-    setCurrentPage(Number(e.target.value));
-  };
+
   
   return (
     <div className={styles.container}>
+      
       {data.length==0&&<h1 style={{ fontSize: 25,marginTop:50 }}>BESTPRICE.STORE</h1>}
+      
       <div className={styles.nav}>
+      {loading&&<ProgressBar progress={progress} />}
+
       <section className={styles["filtru-section"]}>
           <select
             onChange={(e) => handleChangeFilter(e.target.value)}
@@ -103,6 +121,7 @@ function App() {
             })}
           </select>
         </section>
+        
         <div className={styles["input-container"]}>
           <input
             onKeyPress={handleKeyPress}
@@ -126,7 +145,9 @@ function App() {
           </a>
         );
       })}
+      
   </div>
+  
       <ProductsSection data={data} loading={loading} currentPage={currentPage}/>
     </div>
   );

@@ -14,6 +14,7 @@
   width: 100%;
   gap: 20px;
   display: flex;
+  position: relative;
   align-items: center;
   justify-content: space-between;
   padding-right: 30%;
@@ -186,6 +187,29 @@ margin: 10px;
 
 }
 
+
+.progress-container{
+  height: 5px;
+  width: 90%;
+  background: black;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  padding: 2px;
+  transition: all ease-in-out 0.7s;
+  bottom: -50px;
+  
+}
+ 
+.progress-bar{
+  height:2px;
+  background: lightgreen;
+  border-radius: 4px;
+  transition: all ease-in-out 0.8s;
+
+}
+
 @keyframes rotation {
   0% {
     transform: rotate(0deg);
@@ -201,9 +225,30 @@ margin: 10px;
     padding: 20px 10px 20px;
   }
 
+  .progress-container{
+    height: 5px;
+    width: 100%;
+    background: black;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding: 2px;
+    transition: all ease-in-out 0.8s;
+
+  }
+   
+  .progress-bar{
+    height:2px;
+    background: lightgreen;
+    border-radius: 4px;
+    transition: all ease-in-out 0.8s;
+  
+  }
   .nav {
     height: 100px !important;
     display: flex;
+
     gap: 10px;
     align-items: center;
     justify-content: center;
